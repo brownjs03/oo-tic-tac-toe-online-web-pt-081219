@@ -1,3 +1,4 @@
+require 'pry'
 class TicTacToe
 attr_accessor :board
 
@@ -14,4 +15,46 @@ attr_accessor :board
         puts "-----------"
         puts " #{board[6]} | #{board[7]} | #{board[8]} "
     end
+
+    def input_to_index(input)
+        @index = input.to_i - 1
+    end
+
+    def move(index, token = "x")
+        @board[index] = token
+    end 
+
+    def position_taken?(index)
+        @board[index] != " "
+    end
+
+    def valid_move?(position)
+        @board[position] == " "
+    end 
+    
+    def turn_count
+        counter = 0
+        @board.each do |space|
+            if space != " "
+                counter += 1
+            end
+        end
+        counter
+    end 
+
+    def current_player
+    turn_count % 2 == 0 ? "X" : "O"
+    end
+
+    def turn
+        puts "Enter 1-9"
+        move = gets 
+        index = input_to_index(move)
+        if valid_move?(index)
+            move(index, current_player)
+        else turn
+        end
+        display_board
+    end
+end
 end
