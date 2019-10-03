@@ -1,4 +1,3 @@
-require 'pry'
 class TicTacToe
 attr_accessor :board
 
@@ -20,7 +19,7 @@ attr_accessor :board
         @index = input.to_i - 1
     end
 
-    def move(index, token = "x")
+    def move(index, token = "X")
         @board[index] = token
     end 
 
@@ -29,13 +28,17 @@ attr_accessor :board
     end
 
     def valid_move?(position)
-        @board[position] == " "
+        if @board[position] == " "
+            true
+        else
+            false
+        end
     end 
     
     def turn_count
         counter = 0
         @board.each do |space|
-            if space != " "
+            if space == "X" || space == "O"
                 counter += 1
             end
         end
@@ -48,11 +51,41 @@ attr_accessor :board
 
     def turn
         puts "Enter 1-9"
-        move = gets 
-        index = input_to_index(move)
-         if valid_move?(index)
+        input = gets
+        index = input_to_index(input)
+        if valid_move?(index)
             move(index, current_player)
-      end
-        display_board
-      end 
+            display_board
+        else
+            turn
+        end
+    end
+
+    def won?
+        WIN_COMBINATIONS.each {|combo|
+        spot1 = combo[0]
+        spot2 = combo[1]
+        spot3 = combo[2]
+    
+        position1 = board[spot1]
+        position2 = board[spot2]
+        position3 = board[spot3]
+    
+        if position1 == "X" && position2 == "X" && position3 == "X"
+          return combo
+        elsif position1 == "O" && position2 == "O" && position3 == "O"
+          return combo
+        end
+      }
+      return false
+    end
+
+    def full?
+       board.all? {|position| position == "X" || position == "O"}
+    end
+
+    def draw?
+        
+    end
+
 end
