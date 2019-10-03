@@ -50,10 +50,9 @@ attr_accessor :board
         puts "Enter 1-9"
         move = gets 
         index = input_to_index(move)
-        while valid_move?(index)
+         if valid_move?(index)
             move(index, current_player)
-        end
+      end
         display_board
-    end
-end
+      end 
 end
