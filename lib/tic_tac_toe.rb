@@ -85,7 +85,7 @@ attr_accessor :board
     end
 
     def draw?
-        
+       board.won? 
     end
 
 end
